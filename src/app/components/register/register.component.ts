@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { AlertService } from 'src/app/services/auth/alert.service';
-import { UserRegister } from '../../shared/models/Interfaces';
+import { UserRegister, UserRegisterFTMusic } from '../../shared/models/Interfaces';
 import { AccordionModule } from 'primeng/accordion';
 import { Utilidades } from 'src/app/shared/FuncionesGlobales/Utilidades';
 import { ConfiguracionPaisService } from 'src/app/services/setting/configuracion-pais.service';
@@ -46,6 +46,13 @@ export class RegisterComponent implements OnInit {
     declaracion:'',
     fondos:'',
     relacionpolitica:''
+  }
+
+  userFTMusic: UserRegisterFTMusic = {
+    CONSECUTIVO:0,
+    NOMBRE:'nombre prueba',
+    CORREO:'prueba@gmail.com',
+    CLAVE:'prueba'
   }
 
   erroModal = {
@@ -162,6 +169,21 @@ export class RegisterComponent implements OnInit {
 
     this.loading = true;
 
+    /*this.accountservice.registerUserFTMusic(this.userFTMusic).subscribe(data => {
+      this.paso_1 = false
+      this.paso_2 = true;
+      this.alertService.success("FT Music exito");
+    },
+      (error) => {
+        if (error.error.message != undefined) {
+          this.alertService.error(error.error.message);
+        } else {
+          this.alertService.error('Error de sistema FT');
+        }
+        this.loading = false;
+      }
+    )*/
+
     this.accountservice.registerUser(this.user).subscribe(data => {
       this.paso_1 = false
       this.paso_2 = true;
@@ -176,6 +198,8 @@ export class RegisterComponent implements OnInit {
         this.loading = false;
       }
     )
+
+    
   }
 
 

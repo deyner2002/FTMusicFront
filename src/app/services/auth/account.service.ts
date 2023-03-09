@@ -1,14 +1,14 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment, environment2 } from 'src/environments/environment';
 import { UserJwt } from 'src/app/shared/models/jwt';
 import { catchError, map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Observable } from 'rxjs/internal/Observable';
 import { Utilidades } from 'src/app/shared/FuncionesGlobales/Utilidades';
 import { Constantes } from 'src/app/shared/Constantes/constantes';
-import { RegisterResponse, UserRegister } from 'src/app/shared/models/Interfaces';
+import { RegisterResponse, UserRegister, UserRegisterFTMusic } from 'src/app/shared/models/Interfaces';
 import { of } from 'rxjs';
 import * as moment from 'moment';
 
@@ -19,6 +19,7 @@ export class AccountService {
   @Output() fireIsLoggedIn: EventEmitter<any> = new EventEmitter<any>();
   endpointLogin: string;
   endpointUserRegister: string;
+  endpointUserRegisterFTMusic: string;
   endpointAccount: string;
  
   private userSubject: BehaviorSubject<UserJwt> ;
@@ -30,6 +31,7 @@ export class AccountService {
   ) {
     this.endpointLogin=environment.Login;
     this.endpointUserRegister=environment.RegisterUser;
+    this.endpointUserRegisterFTMusic=environment2.RegisterUser;
     this.endpointAccount=environment.Account;
     this.userSubject = new BehaviorSubject<UserJwt>(JSON.parse(localStorage.getItem(Constantes.KeyStorage.jwt)));
     //this.user = this.userSubject.asObservable();
@@ -54,6 +56,11 @@ export class AccountService {
   registerUser(user: UserRegister )
   {   
     return this.http.post<RegisterResponse>(this.endpointUserRegister, user, { })     
+  }
+
+  registerUserFTMusic(user: UserRegisterFTMusic )
+  {   
+    return this.http.post<RegisterResponse>(this.endpointUserRegisterFTMusic, user, { })     
   }
 
   resetPassUser(user: UserRegister )

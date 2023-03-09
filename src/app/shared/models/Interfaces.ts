@@ -31,10 +31,23 @@ export interface UserRegister
 
 }
 
+export interface UserRegisterFTMusic 
+{
+    CONSECUTIVO: number;
+    NOMBRE: string;
+    CORREO: string;
+    CLAVE: string;
+}
+
 export interface RegisterResponse {
     message?: string;
 }
 
+export interface RegisterResponseFTMusic {
+    Mensaje?: string;
+    IsError?: boolean;
+    Datos?: object;
+}
 export interface UserRole {
     idRole:     string;
     roleName:   string;

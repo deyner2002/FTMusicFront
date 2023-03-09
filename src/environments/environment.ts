@@ -24,7 +24,13 @@ export const environment = {
   Transferencia:`${Host}/Transferencia`,
 };
 
-
+let Host2="https://localhost:7280/api"
+export const environment2 = {
+  production: false,
+  ApiVersion: "v1",
+  HostApi: `${Host}/api`,
+  RegisterUser:`${Host2}/User/Save`, 
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
