@@ -1,0 +1,125 @@
+
+<div class="form p-p4 dashboard dashboard-center" >
+
+    <app-alert></app-alert>
+    <form [formGroup]="Form" (ngSubmit)="onSubmit()" *ngIf="paso_1">
+        <div class="grid">
+            <label class="col-12">Busca tu bandera <a href="https://www.banderas-mundo.es/indice">Aquí!</a></label>
+            <!-- firstName -->
+            <div class="form-group col-12 md:col-6">
+                <input type="text" 
+                    class="form-input mat-input form-control" 
+                    [(ngModel)]="datos.Cod"
+                    name="Cod" 
+                    formControlName="Cod"
+                    id="Cod" placeholder="Codigo">
+                <label for="Cod" class="mat-label">Código</label>                
+                <div class="help-text"></div>
+            </div>
+
+              <!-- LastName -->
+            <div class="form-group col-12 md:col-6">
+                <input type="text" 
+                    class="form-input mat-input form-control"
+                    name="Name" 
+                    [(ngModel)]="datos.Name"
+                    formControlName="Name"
+                     id="Name" placeholder="Nombre">
+                <label for="Name" class="mat-label">Nombre</label>
+              
+                <div class="help-text"></div>
+            </div>
+            <div class="form-group col-12 md:col-6">
+                <input type="text" class="form-input mat-input form-control"
+                    name="PaisOrigenBandera" formControlName="PaisOrigenBandera"  
+                    [(ngModel)]="datos.PaisOrigenBandera" id="PaisOrigenBandera"
+                    placeholder="Escribe nombre de la bandera ">
+            
+                <div class="help-text"></div>
+            </div>
+            <div class="form-group col-12 md:col-6">
+                <input type="text" class="form-input mat-input form-control"
+                    name="PaisOrigenMoneda" formControlName="PaisOrigenMoneda"
+                    [(ngModel)]="datos.PaisOrigenMoneda" id="PaisOrigenMoneda"
+                    placeholder="Escribe nombre de la moneda origen">
+                
+                <div class="help-text"></div>
+            </div>
+            
+           
+
+            
+        </div>
+
+        <div class="buttons col-xl-12 row " >
+            <div class="col-6">
+                <button class="btn btn-primary " id="formButton" type="submit" [disabled]="!Form.valid">Registrar</button>
+            </div>
+
+            <div class="col-6">
+                <button class="btn btn-secundary " id="formButtonCancel" type="button" (click)="cancelarEdit()">Cancelar</button>
+            </div>
+           
+            
+        </div>
+    </form>
+
+
+  
+
+
+
+</div>
+
+<div class="dashboard dashboard-center ">
+    <p-table #dt [value]="Paises" [rows]="10" [paginator]="true" [globalFilterFields]="['name','cod']" responsiveLayout="scroll"
+    [(selection)]="selectedPais" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros" [showCurrentPageReport]="true">
+    <!--<ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            <h5 class="m-0 ">Paises</h5>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+            </span>
+        </div>
+    </ng-template>-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="price">Código </th>
+            <th pSortableColumn="name">Nombre </th>
+            <th pSortableColumn="name">Fecha registro </th>
+            <th style="min-width:332px">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." /> &nbsp;
+                </span>
+                <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-info mr-2" (click)="NewRow()" ></button>
+           </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-Pais>
+        <tr>
+            
+            <td>{{Pais.cod}}</td>
+            <td><img [src]="'https://flagcdn.com/16x12/'+Pais.paisOrigenBandera+'.png'" alt=""> {{Pais.name}}</td>
+            <td>{{Pais.fechaReg}}</td>
+            <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="edit(Pais.id)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delete(Pais.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <!--<ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+            En total {{Paises ? Paises.length : 0 }} Paises.
+        </div>
+    </ng-template>-->
+</p-table>
+<p-confirmDialog width="425" icon="fa fa-question-circle" #cd>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-close" label="Cancelar" (click)="cd.reject()" class="p-button-danger"></button>
+        <button type="button" pButton icon="pi pi-check" label="Aceptar" (click)="cd.accept()" class="p-button-info" ></button>
+    </p-footer>
+</p-confirmDialog>
+</div>

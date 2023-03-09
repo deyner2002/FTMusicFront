@@ -1,0 +1,15 @@
+<p-card [style]="styleCard">
+    <ng-template pTemplate="header">
+        <b [style]="styleCardLetrasTitle">&nbsp; Tasas de cambio</b> 
+        <hr class="m-0" style="height:2px;border-width:0;border:1px solid;border-color:#0326cd; ">
+    </ng-template>
+    
+    <ng-template pTemplate="content">
+        <div *ngFor="let tarifa of data" class="text-nowrap">
+            <img style="width: 27px; border-radius: 3px;" [src]="'https://flagcdn.com/w80/'+tarifa.paisOrigen.paisOrigenBandera+'.png'" alt=""><label >&nbsp; {{tarifa.paisOrigen.name}}</label>&nbsp;
+            <img style="width: 27px; border-radius: 3px;" [src]="'https://flagcdn.com/w80/'+tarifa.paisDestino.paisOrigenBandera+'.png'" alt=""><label >&nbsp; {{tarifa.paisDestino.name}}</label>
+            <b >&nbsp; {{tarifa.tasaPublica}}</b>
+        </div>
+        
+    </ng-template>
+</p-card>

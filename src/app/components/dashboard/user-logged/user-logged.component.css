@@ -1,0 +1,19 @@
+.bold{
+    font-weight: bold;
+    color: white;
+}
+
+.rol{
+    color: green;
+    font-size: 12px;
+    opacity: none !important;
+    font-weight: bold;
+}
+ p{
+    color: white; font-size: 10.5px; margin-top: 2px;  
+ }
+ 
+ /*
+ p-avatar{
+    margin-left: 26px;
+ }*/

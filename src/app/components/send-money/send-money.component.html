@@ -1,0 +1,186 @@
+<style>
+    .p-fileupload-buttonbar {
+    display:none;
+  }
+</style>
+<div class="dashboard dashboard-center">
+    <app-alert></app-alert> 
+    <p style="font-weight: bold;" [style]="'color:'+ColorTimer"><i class="pi pi-clock"></i>&nbsp; {{timeLeft}} minutos para actualizar la pagina...
+    </p>
+
+    <div class="row">
+        <div class="col-12 sm:col-12 md:col-6">
+
+            <p-card [style]='styleCardCalculadora'>
+
+                <ng-template pTemplate="header" >
+                    <b [style]="styleCardCalculadoraLetrasTitle" > &nbsp; CALCULAR CAMBIO DE MONEDA</b>
+                    <hr style="border-width:0;border:1px solid;border-color:white;background-color: white; ">
+                </ng-template>
+                <ng-template pTemplate="content">
+                    <form class="formgrid grid" (ngSubmit)="showDialogBeneficiario()" [formGroup]="Form">
+                        <div class="field col-6 sm:col-5 md:col-4">
+                            <label for="toCountry"><b [style]="styleCardCalculadoraLetras">Pais origen</b></label>                            <br/>
+                                <p-dropdown [options]="Paises" optionLabel="name" optionValue="id" (onChange)="Calculadora()"
+                                formControlName="paisOrigenId"  appendTo="body" 
+                                id="paisOrigenId" [showClear]="false" placeholder="Pais Origen" [style]="{'width':'100%'}">
+                                <ng-template let-country pTemplate="item">
+                                    <div class="country-item">
+                                        <div><img [src]="'https://flagcdn.com/16x12/'+country.paisOrigenBandera+'.png'" alt=""> {{country.name}}</div>
+                                    </div>
+                                </ng-template>
+                             </p-dropdown>
+                        </div>
+                        <div class="field col-6 sm:col-7 md:col-8">
+                            <label for="valorEnviar"><b [style]="styleCardCalculadoraLetras">Tu envias:</b></label>
+                            <input id="ValorEnvio" type="text" formControlName="ValorEnvio"  style="height: 60%;" (keypress)="numberOnly($event)" (blur)="onSubmit('ENVIA');transformAmount($event)"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                                name="ValorEnvio">
+                        </div>
+                        
+                        <div class="field col-6 sm:col-5 md:col-4">
+                            <label for="toCountry"><b [style]="styleCardCalculadoraLetras">Pais destino</b></label><br/>
+                                <p-dropdown [options]="Paises" optionLabel="name" optionValue="id" (onChange)="EnviarPaisId($event)" (onChange)="Calculadora()"
+                                formControlName="paisDestinoId"  appendTo="body"
+                                id="paisDestinoId" [showClear]="false" placeholder="Pais Destino" [style]="{'width':'100%'}">
+
+                                <ng-template let-country pTemplate="item">
+                                    <div class="country-item">
+                                        <div><img [src]="'https://flagcdn.com/16x12/'+country.paisOrigenBandera+'.png'" alt=""> {{country.name}}</div>
+                                    </div>
+                                </ng-template>
+                             </p-dropdown>
+                        </div>
+                        <div class="field col-6 sm:col-7 md:col-8">
+                            <label for="valorRecibir"><b [style]="styleCardCalculadoraLetras">Se reciben:</b></label>
+                            <input id="ValorRecibe" type="text" formControlName="ValorRecibe"  style="height: 60%;" (keypress)="numberOnly($event)" (blur)="onSubmit('RECIBE');transformAmountRecibe($event)"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                                name="ValorRecibe">
+                        </div>
+                       
+                        <div class="field col-12 md:col-12">
+                            <p-button label="&nbsp; Enviar" [style]="BtnStyle"  type="ngSubmit"><i class="pi pi-send" style="font-size: 1rem"></i></p-button>
+                        </div>
+    
+                       
+                    </form>
+
+                    
+                   
+
+                </ng-template>
+
+
+                <p-dialog header="Seleccionar beneficiario" [responsive]="true" [formGroup]="Form"  [(visible)]="displayModalBeneficiario" [modal]="true">
+                   
+
+
+                    <app-sendmoney-lista-beneficiarios [PaisId]="PaisId"(ChangeBeneficiario)="MarcarBeneficiario($event)"></app-sendmoney-lista-beneficiarios>
+                    
+                    <p-footer>
+                        <p-button class="flex justify-content-center" label="&nbsp; Continuar" [style]="Btn2Style" (onClick)="showSveDialogInformacion()" [disabled]="this.BeneficiarioSelect.id == 0">
+                            <i class="pi pi-users" style="font-size: 1rem"></i></p-button>
+                        <p-button class="flex justify-content-center" label="&nbsp; Agregar beneficiario" [routerLink]="'../beneficiario'" [style]="BtnStyle" (onClick)="showSveDialogInformacion()"  >
+                                <i class="pi pi-plus" style="font-size: 1rem"></i></p-button>
+
+                    </p-footer>
+                </p-dialog>
+
+
+                <p-dialog  header="Resumen transferencia" [responsive]="true" [formGroup]="Form"  [(visible)]="displayModalInformacion" [modal]="true">
+
+
+
+                    <div class="field">
+
+                        <label class="flex justify-content-center">Estas enviando</label>
+                        <label class="flex justify-content-center" style="font-weight:bold ;">$ {{f.ValorEnvio.value }} {{MonedaOrigen}} = $ {{f.ValorRecibe.value }} {{MonedaDestino}} </label>
+                        <label class="flex justify-content-center">a</label>
+                        <label class="flex justify-content-center" style="font-weight:bold ;">{{BeneficiarioSelect.nombres}} {{BeneficiarioSelect.apellidos}} </label>
+                        <label class="flex justify-content-center">{{BeneficiarioSelect.tipoIdentidad.name}}: {{BeneficiarioSelect.noIdentidad}} </label>
+                        <label class="flex justify-content-center">Banco: {{BeneficiarioSelect.banco.name}}</label>
+                        <label class="flex justify-content-center">Tipo de cuenta: {{BeneficiarioSelect.tipoCuenta}}</label>
+                        <label class="flex justify-content-center">N° {{BeneficiarioSelect.numeroCuenta}}</label>
+
+                    </div>
+
+                    <p-footer>
+                        <p-button class="flex justify-content-center" label="&nbsp; Realizar transferencia" [style]="BtnStyle" (onClick)="showSveDialogComprobante()">
+                            <i class="pi pi-id-card" style="font-size: 1rem"></i></p-button>
+                    </p-footer>
+                </p-dialog>
+
+                <p-dialog header="Cargar comprobante" [responsive]="true" [formGroup]="Form"  [(visible)]="displayModalComprobante" [modal]="true">
+
+
+
+                    <div class="field">
+
+                        <label for="" style="color: red; text-align: center; width: 100%;">
+                            IMPORTANTE
+                        </label>
+                        <label class="flex justify-content-center" style="text-align: justify;">
+                            Las transferencia tienen que ser del titular de la cuenta, de recibir transferencia de terceros  <br>
+                            el envío no será procesado y el reverso se realizará despues de 72 horas.
+                            
+                        </label>
+
+                        <label class="flex justify-content-center" style="font-weight:bold ;">Datos Bancarios </label>
+                        <label class="flex justify-content-center">AGAPE CORP SpA</label>
+                        <label class="flex justify-content-center" style="font-weight:bold ;">Banco ITAU </label>
+                        <label class="flex justify-content-center">Rut: 77.094.925-4</label>
+                        <label class="flex justify-content-center">Cuenta Corriente</label>
+                        <label class="flex justify-content-center">75894868888455</label><br/>
+                        <p-fileUpload 
+                        name="myfile[]" 
+                        url="./upload.php" 
+                        #fileUpload class="ui-fileupload-override" 
+                        (onSelect)="SetComprobante($event)" 
+                        (onRemove)="RemoverComprobante()" 
+                        (click)="ViewComprobante()" 
+                        [chooseLabel]="this.comprobanteUpValidate?'Ver comprobante':'Buscar comprobante'" 
+                        [chooseIcon]="this.comprobanteUpValidate? '':'pi pi-plus'"
+                        uploadLabel="Enviar Transferencia" 
+                        customUpload="true" 
+                        [showCancelButton]="false"
+                        [disabled]="this.comprobanteUpValidate"
+                        
+                        (uploadHandler)="CargarComprobanteTransferencia($event,fileUpload);"
+                        ></p-fileUpload>
+
+                        
+                       
+                    </div>
+                    
+                    
+                </p-dialog>
+
+
+            </p-card>
+
+
+
+        </div>
+
+        <div class="col-12 sm:col-12 md:col-6">
+            <div class="grid">
+                <div class="col-12 sm:col-6 md:col-12">
+
+                    <app-exchange-rate [data]="TarifasDB"></app-exchange-rate>
+
+                </div>
+                <div class="col-12 sm:col-6 md:col-12">
+
+                        <app-last-operations-list></app-last-operations-list>
+    
+
+                </div>
+            </div>
+        </div>
+       
+    </div>
+
+
+
+</div>
+

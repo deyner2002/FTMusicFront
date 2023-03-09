@@ -1,0 +1,153 @@
+
+<div class="dashboard dashboard-center">
+   <app-alert></app-alert>
+   <div class="row">
+      <div class="col-12">
+
+         <p-card>
+            <ng-template pTemplate="content">
+
+               <div class="card">
+                  <div class="card">
+
+                     <p-table responsiveLayout="scroll" #dt2 [value]="TransferenciasBd" dataKey="id" [rows]="6" [showCurrentPageReport]="true"
+                        [loading]="loading" [paginator]="true"
+                        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+                        [globalFilterFields]="['Id','Nombres','NoIdentidad','NoCuenta']">
+                        <ng-template pTemplate="caption">
+                           <div class="flex">
+                              <span class="p-input-icon-left ml-auto">
+                                 <i class="pi pi-search"></i>
+                                 <input style="margin-right: 50px;" pInputText type="text"
+                                    (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Buscar" />
+                              </span>
+
+                           </div>
+
+                        </ng-template>
+
+                        <ng-template pTemplate="header">
+
+                           <tr style="font-size: 12px;">
+                              <th pSortableColumn="Id">Id </th>
+                              <th pSortableColumn="Nombres">Beneficiario</th>
+                              <th pSortableColumn="NoIdentidad">N° Identidad</th>
+                              <th pSortableColumn="NoCuenta">N° Cuenta</th>
+                              <th pSortableColumn="Banco">Banco</th>
+                              <th pSortableColumn="TipoCuenta">Tipo Cuenta</th>
+                              <th pSortableColumn="Cantidad">Cant envío</th>
+                              <th pSortableColumn="Pais">País destino</th>
+                              <th>Referencia Bancaria</th>
+                              <th></th>
+                              
+
+                           </tr>
+
+
+                        </ng-template>
+                        <ng-template pTemplate="body" let-transferenciaBd>
+                           <tr style="font-size: 12px;">
+                              <td>
+                                 {{transferenciaBd.id}}</td>
+                              <td>
+                                 {{transferenciaBd.beneficiario.nombres}} {{transferenciaBd.beneficiario.apellidos}}
+                              </td>
+                              <td>
+                                 {{transferenciaBd.beneficiario.noIdentidad}}
+                              </td>
+                              <td>
+                                 {{transferenciaBd.beneficiario.numeroCuenta}}
+                              </td>
+                              <td>
+                                 {{transferenciaBd.beneficiario.banco.name}}
+                              </td>
+                              <td>
+                                 {{transferenciaBd.beneficiario.tipoCuenta}}
+                              </td>
+                              <td>
+                                 {{transferenciaBd.cantidadRecibe | currency}}
+                              </td>
+                              <td>
+                                 {{transferenciaBd.paisDestino.name}}
+                              </td>
+                              <td>
+                                 <input style="width: 105px;" id="username1" type="username"
+                                    aria-describedby="username1-help" pInputText
+                                    [(ngModel)]="transferenciaBd.referenciaBancaria" />
+
+                              </td>
+                              <td>
+                                 <button pButton
+                                    (click)="Transferir(transferenciaBd.id, transferenciaBd.beneficiario)">Transferir</button>
+                              </td>
+
+
+                           </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                           <tr>
+                              <td colspan="5">No customers found.</td>
+                           </tr>
+                        </ng-template>
+                     </p-table>
+
+                     <p-dialog header="Resumen" [responsive]="true" [style]="{height: '500px', width: '370px'}"
+                        [(visible)]="displaySave" [modal]="true">
+
+
+
+                        <div class="field">
+                           <div class="field2" style="margin-bottom:10px;">
+
+                              <input placeholder="Nombres y Apellidos" id="username1" type="username"
+                                 aria-describedby="username1-help" pInputText readonly />
+                           </div>
+
+
+
+                           <div class="field2" style="margin-bottom:10px;">
+
+                              <input placeholder="Numero de identificación" id="username1" type="username"
+                                 aria-describedby="username1-help" pInputText readonly />
+                           </div>
+                           <div class="field2" style="margin-bottom:10px;">
+
+                              <input placeholder="Banco" id="username1" type="username"
+                                 aria-describedby="username1-help" pInputText readonly />
+                           </div>
+                           <div class="field2" style="margin-bottom:10px;">
+
+                              <input placeholder="Tipo de cuenta" id="username1" type="username"
+                                 aria-describedby="username1-help" pInputText readonly />
+                           </div>
+                           <div class="field2" style="margin-bottom:10px;">
+
+                              <input placeholder="Numero de cuenta" id="username1" type="username"
+                                 aria-describedby="username1-help" pInputText readonly />
+                           </div>
+
+
+
+
+                        </div>
+
+
+                     </p-dialog>
+
+
+                  </div>
+
+               </div>
+            </ng-template>
+         </p-card>
+
+
+      </div>
+   </div>
+   <p-confirmDialog width="425" icon="fa fa-question-circle" #cd>
+      <p-footer>
+          <button type="button" pButton icon="pi pi-close" label="Cancelar" (click)="cd.reject()" class="p-button-danger"></button>
+          <button type="button" pButton icon="pi pi-check" label="Aceptar" (click)="cd.accept()" class="p-button-info" ></button>
+      </p-footer>
+  </p-confirmDialog>
+</div>

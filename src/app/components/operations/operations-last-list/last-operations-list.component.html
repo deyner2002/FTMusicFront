@@ -1,0 +1,25 @@
+<p-card [style]="styleCard">
+    <ng-template pTemplate="header">
+        <b [style]="styleCardLetrasTitle">&nbsp; Últimas transferencias</b>
+        <hr class="m-0" style="height:2px;border-width:0;border:1px solid;border-color:#0326cd; ">
+    </ng-template>
+
+    <ng-template pTemplate="content">
+
+        <div >
+            <div >
+                    <div *ngFor="let Transfer of TransferenciasBd" style="display: flex;margin-top: 1%;" class="mb-2">
+                        
+                        <img style="width: 30px; border-radius: 3px;" [src]="'https://flagcdn.com/w80/'+Transfer.paisDestino.paisOrigenBandera+'.png'" alt="">
+                        <div class="font-weight-bold text-collapse">&nbsp; {{Transfer.beneficiario.nombres +' '+ Transfer.beneficiario.apellidos}}
+                            -{{Transfer.beneficiario.banco.name +'-'+ ( Transfer.cantidadRecibe | pipeDecimal ) + ' '+ Transfer.paisDestino.paisOrigenMoneda}} </div>
+                              
+                    </div>
+                
+            </div>
+
+        </div>
+
+
+    </ng-template>
+</p-card>

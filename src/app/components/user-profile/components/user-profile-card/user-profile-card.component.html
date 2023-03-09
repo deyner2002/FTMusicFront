@@ -1,0 +1,268 @@
+<div class="grid justify-content-center">
+    <div class="col-12 md:col-8" *ngIf="isEdit">
+        <p-card>
+            <ng-template pTemplate="header">
+                <h2 class="pl-3" [ngStyle]="{color:'var(--blue-700)'}">
+                    <b>Editar Perfil</b>
+                </h2>
+            </ng-template>
+            
+            <ng-template class="pt-0"  pTemplate="content">
+                
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                    <div class="grid">
+                        <!-- firstName -->
+                        <div class="form-group col-12 md:col-6">
+                            <input type="text" 
+                                class="form-input mat-input form-control" 
+                               [(ngModel)]="user.firstName"                         
+                                name="firstName" 
+                                formControlName="firstName"
+                                id="firstName" placeholder="Nombre">
+                            <label for="firstName" class="mat-label">Nombres</label>
+                        </div>
+
+                        <!-- LastName -->
+                        <div class="form-group col-12 md:col-6">
+                            <input type="text" 
+                                class="form-input mat-input form-control"
+                                name="lastName" 
+                                [(ngModel)]="user.lastName"
+                                formControlName="lastName"
+                                id="lastName" placeholder="Apellidos">
+                            <label for="lastName" class="mat-label">Apellidos</label>
+                                                       
+                        </div>
+
+                       
+
+                        <!-- birthdate -->
+                     
+                        <div class="p-col-10 form-group col-12 md:col-6 fecha">
+                            <span class="p-fluid">
+                                <p-calendar class=" "
+                                [(ngModel)]="user.birthdate"
+                                formControlName="birthdate"
+                                name="birthdate" 
+                                id="birthdate"  
+                                [showIcon]="true"            
+                            ></p-calendar>
+                            <label for="birthdate" class="mat-label">Fecha de nacimiento</label>     
+                            </span>
+                            <label for="birthdate" class="mat-label">Fecha de nacimiento</label>                
+                            
+                        </div>
+                                            
+
+                        <!-- gender -->
+                        <div class="form-group col-12 md:col-6">
+                            <input 
+                                type="text" 
+                                class="form-input mat-input form-control" 
+                                [(ngModel)]="user.gender"
+                                name="gender" 
+                                formControlName="gender"
+                                id="gender" placeholder="Genero">
+                            <label for="gender" class="mat-label">Genero</label>                
+                            
+                        </div>
+
+                        <!-- address -->
+                        <div class="form-group col-12 md:col-6">
+                            <input 
+                                type="text" 
+                                class="form-input mat-input form-control"
+                                [(ngModel)]="user.adress" 
+                                name="address" formControlName="address"
+                                id="address" placeholder="Dirección">
+                            <label for="address" class="mat-label">Dirección</label>                
+                            
+                        </div>
+
+                        <!-- phoneNumber -->
+                        <div class="form-group col-12 md:col-6">
+                            <input 
+                                type="text" 
+                                class="form-input mat-input form-control"   
+                                [(ngModel)]="user.phoneNumber"
+                                name="phoneNumber" 
+                                formControlName="phoneNumber"
+                                id="phoneNumber" placeholder="Numero de celular">
+                            <label for="phoneNumber" class="mat-label">Numero de telefono</label>                            
+                            
+                        </div>
+
+                        <!-- profession -->
+                        <div class="form-group col-12 md:col-6">
+                            <input 
+                                type="text" 
+                                class="form-input mat-input form-control" 
+                                [(ngModel)]="user.profession"
+                                name="profession" 
+                                formControlName="profession"
+                                id="profession" placeholder="Profesión">
+                            <label for="profession" class="mat-label">firstName</label>
+                            
+                        </div>
+
+                        <!-- email -->
+                        <div class="form-group col-12 md:col-6">
+                            <input 
+                                type="text" 
+                                class="form-input mat-input form-control" 
+                                [(ngModel)]="user.email"
+                                name="email" formControlName="email"
+                                disabled
+                                id="email" placeholder="Email">
+                            <label for="email" class="mat-label">Email</label>
+                            
+                        </div>                     
+
+                    </div>
+
+                    <div class="buttons">
+                        <button 
+                            class="btn btn-primary" 
+                            id="formButton" 
+                            type="submit" 
+                            [disabled]="!userForm.valid">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </ng-template>
+            
+        </p-card>
+    </div>
+
+    <div class="col-12 md:col-8" *ngIf="!isEdit">
+        <p-card>
+            <ng-template pTemplate="header">
+                <div class="grid m-0">
+                  
+                  
+                    <div class="col-2">
+                        <p-avatar icon="pi pi-user" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+                        </div>
+                    <div class="col-10">
+                        <p class="m-0 "><span [ngStyle]="{color:'var(--blue-700)'}"><b>{{user?.firstName + ' ' + user?.lastName}}</b></span></p>
+                        <p class="m-0"><span class="rol">{{roles}}</span></p>                                    
+                    </div>
+                </div>
+            </ng-template>
+            <p-divider></p-divider>
+            <ng-template pTemplate="content">
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Nombres</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.firstName}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Apellidos</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.lastName}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Numero de RUT</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.rutNumber}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Fecha de nacimiento</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.birthdate.split('T')[0]}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Sexo</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.gender}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Dirección</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.adress}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Numero de teléfono</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.phoneNumber}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Profesión</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.profession}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+                <div class="attribute_block">
+                    <div class="grid p-0">
+                        <div class="col-5 p-0">
+                            <span [ngStyle]="{color:'var(--blue-700)'}"><b>Correo Electronico</b></span>
+                        </div>
+                        <div class="col-7 p-0">
+                            <span>{{user?.email}}</span>
+                        </div>
+                    </div>                  
+                </div>
+                <p-divider></p-divider>
+            </ng-template> 
+
+            <ng-template pTemplate="footer">
+                <p-button 
+                    type="button"
+                    (click)="toggleEdit()">EDITAR PERFIL</p-button>
+            </ng-template>
+            
+            
+        </p-card>
+
+      
+    
+    </div>
+</div>

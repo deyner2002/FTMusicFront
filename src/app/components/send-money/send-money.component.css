@@ -1,0 +1,33 @@
+:host >>> .p-card .p-card-body {
+    padding:  0.5rem;
+    margin-top: -5%;
+}
+:host >>> .p-card .p-card-header {
+    padding:  0.5rem;
+}
+:host >>> .p-card {
+    border: 1px solid ;
+   
+}
+/*:host >>> .ui-fileupload-override .p-fileupload-buttonbar .p-ripple .p-fileupload-choose {
+   background-color: white;
+   color: #0326cd;
+   border: 1px solid;
+   border-color: #0326cd;
+}*/
+
+:host >>> .ui-fileupload-override .p-fileupload-buttonbar >  .p-ripple {
+    background-color: white;
+   color: #12c9c0;
+   border: 1px solid;
+   border-color: #12c9c0;
+ }
+
+ :host >>> .ui-fileupload-override .p-fileupload-buttonbar >  .p-element .p-ripple {
+    background-color: white;
+   color: #0326cd;
+   border: 1px solid;
+   border-color: #0326cd;
+ }
+
+ 

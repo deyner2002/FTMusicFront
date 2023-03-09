@@ -1,0 +1,15 @@
+
+<input type="text" class="form-control" name="filterPost" placeholder="Buscar..." [(ngModel)]="filterPost">
+<br>
+<div *ngFor="let beneficiario of BeneficiariosBdPorPais | filter:filterPost">
+    <div>
+        <div class="field-radiobutton">
+            <p-radioButton name="rbBeneficiario" id="rbBeneficiario" value="{{beneficiario.id}}"
+                inputId="{{beneficiario.id}}" [(ngModel)]="BeneficiarioRadioBt" (onClick)="SelectBeneficiario()">
+            </p-radioButton>
+            <img style="margin-left: 20px; border-radius: 3px;"  [src]="'https://flagcdn.com/h20/'+beneficiario.pais.paisOrigenBandera+'.png'" alt="">
+            <label for="{{beneficiario.id}}"> {{beneficiario.nombres }}   {{beneficiario.apellidos}} - {{beneficiario.banco.name}} - {{beneficiario.numeroCuenta}}</label>
+        </div>
+    </div>
+
+</div>

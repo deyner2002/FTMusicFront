@@ -1,0 +1,25 @@
+:host >>> .p-card .p-card-body {
+    padding:  0.5rem;
+    margin-top: -5%;
+}
+:host >>> .p-card .p-card-header {
+    padding:  0.5rem;
+}
+:host >>> .p-card {
+    border: 1px solid ;
+   
+}
+
+img{
+    width: 25px;	
+    border-radius: 100%;
+
+}
+
+@media (max-width: 500px) {
+    .texto-paises{
+       width: 100%;
+       text-align: center;
+       margin-left: 0px !important;
+    }
+}

@@ -1,0 +1,228 @@
+<div class="grid justify-content-center">
+    <div class="px-4 col-12 sm:col-10 md:col-8">
+        <app-alert></app-alert>
+        <button class="btn btn-primary" *ngIf="paso_2" [routerLink]="['../login']">ingresar</button>
+
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="paso_1">
+            <div class="grid">
+                <!-- firstName -->
+                <div class="form-group col-12 md:col-6">
+                    <input type="text" class="form-input mat-input form-control" [(ngModel)]="user.firstName"
+                        name="firstName" formControlName="firstName" id="firstName" placeholder="Ingresa tus nombres">
+                    <label for="firstName" class="mat-label">Nombres</label>
+                </div>
+                <!-- LastName -->
+                <div class="form-group col-12 md:col-6">
+                    <input type="text" class="form-input mat-input form-control" name="lastName"
+                        [(ngModel)]="user.lastName" formControlName="lastName" id="lastName"
+                        placeholder="Ingresa tus apellidos">
+                    <label for="lastName" class="mat-label">Apellidos</label>
+                </div>
+
+                <br>
+                <!-- rutNumber -->
+                <div class="form-group col-12 md:col-6">
+                    <input type="text" class="form-input mat-input form-control" [(ngModel)]="user.rutNumber"
+                        (keyup)="ValidateRut()" (keypress)="numberOnly($event)" name="rutNumber"
+                        formControlName="rutNumber" id="rutNumber" placeholder="Ingresar rut">
+                    <label for="rutNumber" class="mat-label">Rut</label>
+                    <div class="messages d-block p-3" style="text-align: left;" *ngIf="ValidacionRut !=''">
+                        <div [ngClass]="'negative'">{{ValidacionRut}}</div>
+                    </div>
+
+                    <div class="help-text">Ejemplo: 123123123</div>
+                </div>
+
+                <!-- birthdate -->
+                <!-- <div class="form-group col-12 md:col-6">
+                    <input 
+                        type="text" 
+                        class="form-input mat-input form-control" 
+                        [(ngModel)]="user.birthdate"
+                        name="birthdate" 
+                        formControlName="birthdate"
+                        id="birthdate" placeholder="Fecha nacimiento">
+                    <label for="birthdate" class="mat-label">Fecha de nacimiento</label>                
+                    <div class="help-text">Ingresa tu fecha de nacimiento</div>
+                </div> -->
+                <div class="p-col-10 form-group col-12 md:col-6 fecha">
+                    <span class="p-fluid">
+                        <p-calendar class=" " [maxDate]="maxDate" [(ngModel)]="user.birthdate"
+                            formControlName="birthdate" name="birthdate" id="birthdate"
+                            placeholder="Fecha de nacimiento" [showIcon]="true"></p-calendar>
+                        <label for="birthdate" class="mat-label">Fecha de nacimiento</label>
+                    </span>
+                    <br>
+                </div>
+                <!--gender-->
+                <div class="p-col-10 form-group col-12 md:col-6">
+                    <span class="p-fluid">
+                        <p-dropdown [options]="generos" [(ngModel)]="user.gender" optionLabel="name" optionValue="name"
+                            formControlName="gender" id="gender" [showClear]="true" placeholder="Género"></p-dropdown>
+                    </span>
+                </div>
+
+                <br>
+
+                <!-- address -->
+                <div class="form-group col-12 md:col-6">
+                    <input type="text" class="form-input mat-input form-control" [(ngModel)]="user.adress"
+                        name="address" formControlName="address" id="address" placeholder="Ingresa tu dirección">
+                    <label for="address" class="mat-label">Dirección</label>
+                </div>
+
+                <br>
+                <!-- phoneNumber -->
+                <div class="form-group col-12 md:col-6">
+                    <input type="text" class="form-input mat-input form-control" [(ngModel)]="user.phoneNumber"
+                        name="phoneNumber" formControlName="phoneNumber" id="phoneNumber"
+                        placeholder="Ingresar número telefono">
+                    <label for="phoneNumber" class="mat-label">Numero de telefono</label>
+
+                    <div class="help-text">Ejemplo: 1234567890</div>
+                </div>
+
+                <!-- profession -->
+                <div class="form-group col-12 md:col-6">
+                    <input type="text" class="form-input mat-input form-control" [(ngModel)]="user.profession"
+                        name="profession" formControlName="profession" id="profession"
+                        placeholder="Ingresa tu profesión">
+                    <label for="profession" class="mat-label">Profesión</label>
+                </div>
+                <br>
+                <div class=" p-col-10 form-group col-12 md:col-6">
+                    <span class="p-fluid">
+                        <p-dropdown [options]="PisesBd" optionLabel="name" optionValue="name" [(ngModel)]="user.country"
+                            formControlName="idPais" id="idPais" [showClear]="true"
+                            placeholder="Seleccionar nacionalidad">
+                        </p-dropdown>
+                    </span>
+
+
+                </div>
+                <br>
+                <!-- email -->
+                <div class="form-group col-12 md:col-6">
+                    <input type="text" class="form-input mat-input form-control" [(ngModel)]="user.email" name="email"
+                        formControlName="email" id="email" placeholder="Ingresar correo electronico">
+                    <label for="email" class="mat-label">correo electronico</label>
+
+                    <div class="help-text">Ejemplo@ejemplo.com</div>
+                </div>
+
+                <div class="form-group col-12 md:col-6">
+                    <span class="p-input-icon-right col-12 p-0">
+                        <i class="pi pi-eye" (click)="showPasswor= !showPasswor"></i>
+                        <input formControlName="password" [(ngModel)]="user.password"
+                            [class]="'form-input mat-input form-control '" [type]="showPasswor?'text':'password' "
+                            id="password" name="password" placeholder="Ingresar contraseña" maxlength=16
+                            (keyup)="onValidateErrorClassRepitePass()">
+                        <label class="mat-label" for="RepitePass">Contraseña</label>
+                    </span>
+
+                    <div class="messages d-block p-3" style="text-align: left;">
+                        <div [ngClass]="erroModalRePass.longitud?'positive':'negative'">Mínimo 10 caracteres</div>
+                        <div [ngClass]="erroModalRePass.letraMayuscula?'positive':'negative'">1 Mayúscula mínimo</div>
+                        <div [ngClass]="erroModalRePass.letraMinuscula?'positive':'negative'">1 Letra mínimo</div>
+                        <div [ngClass]="erroModalRePass.simbolo?'positive':'negative'">1 Símbolo</div>
+                        <div [ngClass]="erroModalRePass.numero?'positive':'negative'">1 número</div>
+                    </div>
+                </div>
+
+                <div class="form-group col-12 md:col-6">
+                    <span class="p-input-icon-right col-12 p-0">
+                        <label>Origen de los fondos:</label>
+
+                    </span>
+
+                    <div class="messages d-block " style="text-align: left;">
+                        <div>
+                            <input formControlName="fondos" [(ngModel)]="user.fondos" value="Sueldo" type="radio"
+                                 name="fondos">&nbsp;
+                            <label>Sueldo</label>
+                        </div>
+                        <div>
+                            <input formControlName="fondos" [(ngModel)]="user.fondos" value="Ahorros" type="radio"
+                                 name="fondos">&nbsp;
+
+                            <label>Ahorros</label>
+
+                        </div>
+                        <div>
+                            <input formControlName="fondos" [(ngModel)]="user.fondos" value="Creditos" type="radio"
+                                 name="fondos">&nbsp;
+                            <label>Creditos</label>
+
+                        </div>
+                        <div>
+                            <input formControlName="fondos" [(ngModel)]="user.fondos" value="Inversiones" type="radio"
+                                 name="fondos">&nbsp;
+                            <label>Inversiones</label>
+
+                        </div>
+                        <div>
+                            <input formControlName="fondos" [(ngModel)]="user.fondos" value="VentaTrabajo" type="radio"
+                                 name="fondos">&nbsp;
+
+                            <label>Ventas relacionadas a mi actividad laboral</label>
+
+                        </div>
+                        <div>
+                            <input formControlName="fondos" [(ngModel)]="user.fondos" value="VentaPropiedad"
+                                type="radio"  name="fondos">&nbsp;
+
+                            <label>Venta de propiedad, auto, muebles, artefactos eléctricos</label>
+
+                        </div>
+                        <div>
+                            <input formControlName="fondos" [(ngModel)]="user.fondos" value="Otros" type="radio"
+                                 name="fondos">&nbsp;
+
+                            <label>Otros</label>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-12 md:col-6">
+                    <span class="p-input-icon-right col-12 p-0">
+                        <label>Declaro que el dinero que voy a enviar es de mi propiedad y de procedencia lícita</label>
+
+                    </span>
+
+                    <div class="messages d-block " style="text-align: left;">
+                        <input formControlName="declaracion" [(ngModel)]="user.declaracion" value="SI" type="radio"
+                             name="declaracion">
+                        <label>SI</label> &nbsp;
+                        <input formControlName="declaracion" [(ngModel)]="user.declaracion" value="NO" type="radio"
+                            name="declaracion">
+                        <label>NO</label>
+                    </div>
+                </div>
+                
+                <div class="form-group col-12 md:col-6">
+                    <span class="p-input-icon-right col-12 p-0">
+                        <label>Es usted o tiene vínculos con Personas Expuestas Políticamente (PEP), son personas que
+                            estén desempeñando o hayan desempeñado algún cargo político o cargos públicos</label>
+
+                    </span>
+
+                    <div class="messages d-block " style="text-align: left;">
+                        <input formControlName="relacionpolitica" [(ngModel)]="user.relacionpolitica" value="SI"
+                            type="radio"  name="relacionpolitica">
+                        <label>SI</label> &nbsp;
+                        <input formControlName="relacionpolitica" [(ngModel)]="user.relacionpolitica" value="NO"
+                            type="radio"  name="relacionpolitica">
+                        <label>NO</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="buttons">
+                <button class="btn btn-primary" id="formButton" type="submit"
+                    [disabled]="!userForm.valid">Registrar</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="form p-p4 dashboard dashboard-center">
+
+    <app-alert></app-alert>
+
+</div>
+
+<div class="form p-p4 dashboard dashboard-center">
+
+    <app-alert></app-alert>
+    <form [formGroup]="Form1" (ngSubmit)="ChangeRole()" *ngIf="paso_1">
+        <div class="grid">
+
+            <div class="form-group col-12 md:col-6">
+                
+                <div class="help-text">Nombre </div>
+                <input type="text" class="form-input mat-input form-control" name="Name" formControlName="Name" id="Name">
+                <label for="Name" class="mat-label"></label>
+            </div>
+            <div class="form-group col-12 md:col-6">
+                
+                <div class="help-text">Rol actual </div>
+                <input type="text" class="form-input mat-input form-control" name="RolText" formControlName="RolText" id="RolText">
+                <label for="RolText" class="mat-label"></label>
+            </div>
+
+            
+
+            <br>
+            <div class="p-col-10 form-group col-12 md:col-6">
+                <span class="p-fluid">
+                    <p-dropdown [options]="RolesBd" optionLabel="name" optionValue="name" formControlName="Roles"
+                        id="Roles" name="Roles" [showClear]="true" placeholder="Seleccionar rol"></p-dropdown>
+                </span>
+            </div>
+
+
+            <br>
+            <br>
+
+        </div>
+
+        <div class="buttons col-12 row m-0">
+            <div class="col-6">
+                <button class="btn btn-primary " id="formButton" type="submit"
+                    [disabled]="!Form1.valid">Registrar</button>
+            </div>
+
+            <div class="col-6">
+                <button class="btn btn-secundary " id="formButtonCancel" type="button"
+                    (click)="cancelarEdit()">Cancelar</button>
+            </div>
+
+
+        </div>
+    </form>
+
+
+
+
+
+
+</div>
+
+<div class="dashboard dashboard-center ">
+    <p-table #dt [value]="Users" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['firstName','lastName','rutNumber']" responsiveLayout="scroll"
+        [(selection)]="selectedUsers" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+        [showCurrentPageReport]="true">
+        <!--<ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            <h5 class="m-0 ">Paises</h5>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+            </span>
+        </div>
+    </ng-template>-->
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar" />
+            </span>
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name">Nombre </th>
+                <th pSortableColumn="lastname">Apellido </th>
+                <th pSortableColumn="rut">Rut </th>
+                <th pSortableColumn="adres">Direccion </th>
+                <th pSortableColumn="birthdate">Nacimiento </th>
+                <th pSortableColumn="mail">Correo </th>
+                <th pSortableColumn="rol">Rol </th>
+                <th> Editar</th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Users>
+            <tr>
+
+                <td>{{Users.firstName}}</td>
+                <td>{{Users.lastName}}</td>
+                <td>{{Users.rutNumber}}</td>
+                <td>{{Users.adress}}</td>
+                <td>{{Users.birthdate}}</td>
+                <td>{{Users.email}}</td>
+                <td>{{Users.roles}}</td>
+                <td>
+                    <button type="button" pButton pRipple icon="pi pi-pencil" (click)="showSve(Users.id)"></button>
+                </td>
+
+
+            </tr>
+        </ng-template>
+        <!--<ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+            En total {{Paises ? Paises.length : 0 }} Paises.
+        </div>
+    </ng-template>-->
+    </p-table>
+
+    <p-confirmDialog width="425" icon="fa fa-question-circle" #cd>
+        <p-footer>
+            <button type="button" pButton icon="pi pi-close" label="Cancelar" (click)="cd.reject()"
+                class="p-button-danger"></button>
+            <button type="button" pButton icon="pi pi-check" label="Aceptar" (click)="cd.accept()"
+                class="p-button-info"></button>
+        </p-footer>
+    </p-confirmDialog>
+
+
+</div>

@@ -1,0 +1,11 @@
+
+
+@media (min-height: 600px){
+.justify-content-center{
+    position: absolute;
+    right: 60px     ;
+    bottom: 26px;
+    width: 10px;
+    height: 15px;
+}
+}

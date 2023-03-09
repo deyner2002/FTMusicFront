@@ -1,0 +1,54 @@
+
+<div class="dashboard dashboard-center">
+    <app-alert></app-alert>
+    <div class="row">
+        <div>
+            <p-carousel [value]="TarifasDB" styleClass="custom-carousel" [showIndicators]="false" [showNavigators]="true" [numVisible]="3" [numScroll]="3"
+                [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+                <ng-template pTemplate="header">
+                    <h4 style="text-align: center;">Hola, {{nombre+' '+apellido}}</h4>
+                    
+                    <h4 class="mt-md-5 texto-paises" style="margin-left: 45px;">Tasas - Países</h4>
+                </ng-template>
+                <ng-template let-TarifasDB pTemplate="item">
+                    <div [style.background]="TarifasDB.index%2==0?'#14228b':'#1c2fc7'" style="margin-right: 17px;  border-radius: 8px; padding: 27px 0;"
+                        class="product-item">
+                        <div class="product-item-content">
+                            <div class="mb-3">
+                                
+                                <img width="20px" height="20px" class="mr-1"    style="margin-left: 20px;"  [src]="'https://flagcdn.com/h20/'+TarifasDB.paisOrigen.paisOrigenBandera+'.png'"
+                                    alt="">
+                                <img width="20px" height="20px" [src]="'https://flagcdn.com/h20/'+TarifasDB.paisDestino.paisOrigenBandera+'.png'"
+                                    alt="">
+                            </div>
+                            <div>
+                                 <b style="color: white;margin-left: 20px; font-size: 13px;"> {{TarifasDB.paisOrigen.paisOrigenMoneda}}/{{TarifasDB.paisDestino.paisOrigenMoneda}}</b>
+                            </div>
+                            <b style="margin-top: 4px;font-size: 25px; color: white;margin-left: 20px;"> {{TarifasDB.tasaPublica}}</b>
+                            <p style="font-size: small; margin-bottom: 0px;color: white;margin-left: 20px;"> Sistema de envíos seguro</p>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+
+            <br><br>
+
+            <div style="margin: 0 auto" class="col-12 sm:col-10 md:col-6">
+
+                <div class="col-12 p-0">
+
+                    <app-last-operations-list></app-last-operations-list>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <br>
+
+
+
+</div>

@@ -1,0 +1,84 @@
+<div class="dashboard-nav-bottom">
+
+  <nav>
+    <ul class="nav-bottom">
+
+      <li class="Perfil desktop-only" style="padding: .6rem 0;">
+        <app-user-logged></app-user-logged>
+      </li>
+
+      <li *appPerfil="perfilView.btnMenuPrincipal" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/home']"
+          [ngClass]="{'active': dashboardvisualizar.isActive}">
+          <i class="icon icon-home"></i><div [ngClass]="{'desktop-only': IsAdmin}">Principal</div></a>
+      </li>
+      <li *appPerfil="perfilView.btnEnviarDinero" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/sendMoney']"
+          [ngClass]="{'active': sendMoneyVisualizar.isActive}">
+          <i class="icon icon-up"></i><div [ngClass]="{'desktop-only': IsAdmin}">Enviar</div>
+        </a>
+      </li>
+      <li *appPerfil="perfilView.btnOperaciones" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/operations']"
+          [ngClass]="{'active': operationsVisualizar.isActive}">
+          <i class="icon icon-operacion"></i><div [ngClass]="{'desktop-only': IsAdmin}">Operaciones</div>
+        </a>
+      </li>
+      <li *appPerfil="perfilView.btnBeneficiarios" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/beneficiario']"
+          [ngClass]="{'active': beneficiariovisualizar.isActive}">
+          <i class="icon icon-Beneficiario"></i><div [ngClass]="{'desktop-only': IsAdmin}">Beneficiarios</div></a>
+      </li>
+      <li  *appPerfil="perfilView.btnsetting" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/config']"
+          [ngClass]="{'active': configvisualizar.isActive}">
+          <i class="icon icon-Configuracion"></i><div  [ngClass]="{'desktop-only': IsAdmin}">Configuración</div></a>
+      </li>
+      <li *appPerfil="perfilView.btnadmin" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/admin']" [ngClass]="{'active': Adminvisualizar.isActive}">
+          <i class="icon icon-Administracion"></i><div [ngClass]="{'desktop-only': IsAdmin}">Administración</div></a>
+      </li>
+      <li *appPerfil="perfilView.btnValidador" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/validador']"
+          [ngClass]="{'active': Validadorvisualizar.isActive}">
+          <i class="icon icon-Validador"></i><div [ngClass]="{'desktop-only': IsAdmin}">Validador</div></a>
+      </li>
+      <li *appPerfil="perfilView.btnoperador" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/operador']"
+          [ngClass]="{'active': Operadorvisualizar.isActive}">
+          <i class="icon icon-Operador"></i><div [ngClass]="{'desktop-only': IsAdmin}">Operador</div></a>
+      </li>
+      <li *appPerfil="perfilView.btnFormulario" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/formulario']"
+          [ngClass]="{'active': Formulariovisualizar.isActive}">
+          <i class="icon icon-Operador"></i><div [ngClass]="{'desktop-only': IsAdmin}">Formulario</div></a>
+      </li>
+      <li *appPerfil="perfilView.btnCliente" [style]="tamanoDefault">
+        <a routerLinkActive="active" [routerLink]="['../Agape/cliente']"
+          [ngClass]="{'active': Clientevisualizar.isActive}">
+          <i class="icon icon-Operador"></i><div [ngClass]="{'desktop-only': IsAdmin}">Cliente</div></a>
+      </li>
+
+      <li class="justify-content-center desktop-only">
+        <a routerLinkActive="active" [routerLink]="[]" (click)="logout()" title="Salir">
+        <i class="pi pi-sign-out"></i></a>  
+      </li>
+  
+    </ul>
+    
+    
+    <!--workaround para marcar coo active el menú principal-->
+    <a routerLink="/Agape/home" routerLinkActive #dashboardvisualizar="routerLinkActive" style="display: none"></a>
+    <a routerLink="/Agape/sendMoney" routerLinkActive #sendMoneyVisualizar="routerLinkActive" style="display: none;">  </a>
+    <a routerLink="/Agape/operations" routerLinkActive #operationsVisualizar="routerLinkActive" style="display: none;">  </a>
+    <a routerLink="/Agape/beneficiario" routerLinkActive #beneficiariovisualizar="routerLinkActive"  style="display: none"></a>
+    <a routerLink="/Agape/config" routerLinkActive #configvisualizar="routerLinkActive" style="display: none"></a>
+    <a routerLink="/Agape/admin" routerLinkActive #Adminvisualizar="routerLinkActive" style="display: none"></a>
+    <a routerLink="/Agape/validador" routerLinkActive #Validadorvisualizar="routerLinkActive" style="display: none"></a>
+    <a routerLink="/Agape/operador" routerLinkActive #Operadorvisualizar="routerLinkActive" style="display: none"></a>
+    <a routerLink="/Agape/operador" routerLinkActive #LogOutVisualizar="routerLinkActive" style="display: none"></a>
+    <a routerLink="/Agape/formulario" routerLinkActive #Formulariovisualizar="routerLinkActive" style="display: none"></a>
+    <a routerLink="/Agape/cliente" routerLinkActive #Clientevisualizar="routerLinkActive" style="display: none"></a>
+
+  </nav>
+</div>

@@ -1,0 +1,16 @@
+<div class="desktop-only">
+  <div [routerLink]="['../Agape/profile']" style="cursor: pointer;" title="Perfil">
+    <div >
+      <p-avatar  label={{iniciales}} size="small" shape="circle"></p-avatar>
+      <p class="mb-0">{{roles}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="movil-only">
+  <div class="grid m-0" (click)="menu.toggle($event)">
+      <p-avatar  label={{iniciales}} size="small" shape="circle"></p-avatar>
+  </div>
+
+  <p-menu #menu [popup]="true" [model]="items"></p-menu>
+</div>

@@ -1,0 +1,206 @@
+<app-alert></app-alert>
+<div class="form dashboard dashboard-center pb-0" *ngIf="paso_1">
+
+    
+    <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+        <div class="grid">
+
+            <div class="form-group col-12 md:col-6 ">
+                <input type="text" class="form-input mat-input form-control" name="nombres" formControlName="nombres"
+                    id="nombres" placeholder="Ingresar nombres" [(ngModel)]="datos.nombres">
+                <label for="nombres" class="mat-label">Nombres</label>
+            </div>
+
+            <div class="form-group col-12 md:col-6">
+                <input type="text" class="form-input mat-input form-control" name="apellidos"
+                    formControlName="apellidos" id="apellidos" placeholder="Ingresar apellidos" [(ngModel)]="datos.apellidos">
+                <label for="apellidos" class="mat-label">Apellidos</label>
+            </div>
+
+            <div class=" p-col-10 form-group col-12 md:col-6">
+                <span class="p-fluid">
+                    <p-dropdown [options]="TipoIdBd" optionLabel="name" optionValue="id"
+                        [(ngModel)]="datos.tipoIdentidadId" formControlName="tipoIdentidadId" id="tipoIdentidadId"
+                        [showClear]="true" placeholder="Tipo de indentidad">
+                    </p-dropdown>
+                </span>
+            </div>
+
+            <div class="form-group col-12 md:col-6">
+                <input type="text" class="form-input mat-input form-control" name="noIdentidad"
+                    formControlName="noIdentidad" id="noIdentidad" placeholder="Ingresar N° identificación"
+                    [(ngModel)]="datos.noIdentidad">
+                <label for="noIdentidad" class="mat-label">Ingresar N° identificación</label>
+            </div>
+
+            <div class="p-col-10 form-group col-12 md:col-6">
+                <span class="p-fluid">
+                    <p-dropdown [options]="Paises" optionLabel="name" optionValue="id" (onChange)="buscarBancos($event)"
+                    [(ngModel)]="datos.paisId" formControlName="paisId"  [showClear]="true" placeholder="País"></p-dropdown>
+                </span>
+            </div>
+
+
+            <div class="p-col-10 form-group col-12 md:col-6">
+                <span class="p-fluid">
+                    <p-dropdown [options]="BancosFiltro" optionLabel="name" optionValue="id" [(ngModel)]="datos.bancoId"
+                        formControlName="bancoId" id="bancoId" [showClear]="true" placeholder="Bancos" [disabled]="disabledBancos" ></p-dropdown>
+                </span>
+            </div>
+
+
+            
+            <div class="p-col-10 form-group col-12 md:col-6">
+                <span class="p-fluid">
+                    <p-dropdown [options]="tiposCuenta" optionLabel="name" optionValue="name"
+                        [(ngModel)]="datos.tipoCuenta" formControlName="tipoCuenta" id="tipoCuenta" [showClear]="true"
+                        placeholder="Tipo de cuenta"></p-dropdown>
+                </span>
+            </div>
+
+            <div class="form-group col-12 md:col-6">
+                <input type="text" class="form-input mat-input form-control" name="numeroCuenta"
+                    formControlName="numeroCuenta" id="numeroCuenta" placeholder="Ingresar N° de cuenta"
+                    [(ngModel)]="datos.numeroCuenta">
+                <label for="numeroCuenta" class="mat-label">N° de cuenta</label>
+            </div>
+
+            <div class="form-group col-12 md:col-6">
+                <input type="text" class="form-input mat-input form-control" name="email" formControlName="email"
+                    id="email" placeholder="Ingresar Email" [(ngModel)]="datos.email">
+                <label for="email" class="mat-label">Email</label>
+            </div>
+
+            <div class="p-col-10 form-group col-12 md:col-6">
+                <span class="p-fluid">
+                    <p-dropdown [options]="ParentescoBd" optionLabel="name" optionValue="id"
+                        [(ngModel)]="datos.relacionId" formControlName="relacionId" id="relacionId" [showClear]="true"
+                        placeholder="Parentesco"></p-dropdown>
+                </span>
+            </div>
+
+           <!-- <div class="p-col-10 form-group col-12 md:col-6">
+                <span class="p-fluid">
+                    <p-dropdown [options]="MotivoTransferenciaBd" optionLabel="name" optionValue="id"
+                        [(ngModel)]="datos.motivoTransferenciaId" formControlName="motivoTransferenciaId"
+                        id="motivoTransferenciaId" [showClear]="true" placeholder="Motivo transferencia"></p-dropdown>
+                </span>
+            </div>-->
+        </div>
+
+        <div class="buttons col-12 row m-0">
+            <div class="col-6">
+                <button class="btn btn-primary " id="formButton" type="submit"
+                    [disabled]="!Form.valid">Registrar</button>
+            </div>
+
+            <div class="col-6">
+                <button class="btn btn-secundary " id="formButtonCancel" type="button"
+                    (click)="cancelarEdit()">Cancelar</button>
+            </div>
+
+
+        </div>
+    </form>
+</div>
+
+<div class="dashboard dashboard-center ">
+
+        <div class="col-12">
+            <p-card>
+                <ng-template pTemplate="content">
+                    <div class="card">
+                        <p-table #dt responsiveLayout="scroll" [value]="BeneficiariosBd" [rows]="10" [paginator]="true"
+                            [globalFilterFields]="['nombres','apellidos','tipoIdentidad.name','noIdentidad','banco.name','tipoCuenta','numeroCuenta','numeroCuenta','relacion.name','motivoTransferencia.name','email']"
+                            [(selection)]="selectedPais" [rowHover]="true" dataKey="id"
+                            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+                            [showCurrentPageReport]="true">
+
+                            <ng-template pTemplate="caption">
+                                <div class="flex">
+                                    <div class="flex align-items-center p-input-icon-left ml-auto">
+
+
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder="Buscar" class="col-10 sm:col-10"/>&nbsp;
+                                            </span>
+                                        
+                                        
+
+                                        
+                                        
+                                        <button pButton pRipple icon="pi pi-plus"
+                                        class="p-button-rounded p-button-info mr-2" (click)="NewRow()" title="Agregar beneficiario"></button>
+                                        
+                                        
+
+                                        <button pButton pRipple icon="pi pi-send"
+                                            class="p-button-rounded p-button-info mr-2" [routerLink]="'../sendMoney'" title="Ir a enviar dinero"></button>    
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                            <ng-template pTemplate="header">
+                                <tr style="font-size: 12px;">
+                                    <th pSortableColumn="name">Nombres </th>
+                                    <th pSortableColumn="lastName">Apellidos </th>
+                                    <th pSortableColumn="typeId">Tipo ID</th>
+                                    <th pSortableColumn="idNumber">Número ID </th>
+                                    <th pSortableColumn="typeId">Banco</th>
+                                    <th pSortableColumn="accountType">Tipo Cuenta</th>
+                                    <th pSortableColumn="accountNumber">Número Cuenta </th>
+                                    <th pSortableColumn="relationship">Relación</th>
+                                    <th pSortableColumn="email">Correo</th>
+                                    <th pSortableColumn="pais">País</th>
+                                    <th pSortableColumn="operaciones">Operaciones</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-BeneficiariosBd>
+                                <tr style="font-size: 12px;">
+
+                                    <td>{{BeneficiariosBd.nombres}}</td>
+                                    <td>{{BeneficiariosBd.apellidos}}</td>
+                                    <td>{{BeneficiariosBd.tipoIdentidad.name}}</td>
+                                    <td>{{BeneficiariosBd.noIdentidad}}</td>
+                                    <td>{{BeneficiariosBd.banco.name}}</td>
+                                    <td>{{BeneficiariosBd.tipoCuenta}}</td>
+                                    <td>{{BeneficiariosBd.numeroCuenta}}</td>
+                                    <td>{{BeneficiariosBd.relacion.name}}</td>
+                                    
+                                    <td>{{BeneficiariosBd.email}}</td>
+                                    <td>{{BeneficiariosBd.pais.name}}</td>
+                                    <td style="min-width:138px">
+                                        <button pButton pRipple icon="pi pi-pencil"
+                                            class="p-button-rounded p-button-info mr-2"
+                                            (click)="edit(BeneficiariosBd.id)"></button>
+                                        <button pButton pRipple icon="pi pi-trash"
+                                            class="p-button-rounded p-button-danger"
+                                            (click)="delete(BeneficiariosBd.id)"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <!--<ng-template pTemplate="summary">
+                                <div class="flex align-items-center justify-content-between">
+                                    En total {{Paises ? Paises.length : 0 }} Paises.
+                                </div>
+                            </ng-template>-->
+                        </p-table>
+                        
+                    </div>
+                    <p-confirmDialog width="425" icon="fa fa-question-circle" #cd>
+                        <p-footer>
+                            <button type="button" pButton icon="pi pi-close" label="Cancelar"
+                                (click)="cd.reject()" class="p-button-danger"></button>
+                            <button type="button" pButton icon="pi pi-check" label="Aceptar"
+                                (click)="cd.accept()" class="p-button-info"></button>
+                        </p-footer>
+                    </p-confirmDialog>
+                      
+                </ng-template>
+            </p-card>
+        </div>
+    
+</div>
